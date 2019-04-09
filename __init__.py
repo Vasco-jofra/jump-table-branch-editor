@@ -1,7 +1,7 @@
 import sys
 import copy
 
-from binaryninja import LowLevelILOperation, PluginCommand, log_debug, log_info, log_alert
+from binaryninja import LowLevelILOperation, PluginCommand, log_debug, log_info, log_error, log_alert
 from PySide2.QtCore import Qt, QModelIndex, QAbstractTableModel
 from PySide2.QtWidgets import (QDialog, QApplication, QTableView, QVBoxLayout, QHBoxLayout,
                                QPushButton, QLabel, QLineEdit)
@@ -23,6 +23,10 @@ class IndirectBranchModel(QAbstractTableModel):
         if addr is None:
             return
 
+        # Avoid duplicate entries
+        if any([i[self.COL_ADDRESS] == addr for i in self.branches]):
+            return
+
         self.insertRows(row)
         self.setData(self.index(row, 0), self.default_branch[0])
         self.setData(self.index(row, 1), hex(int(addr)))
@@ -34,7 +38,7 @@ class IndirectBranchModel(QAbstractTableModel):
             else:
                 res = int(val)
         except ValueError:
-            log_alert("Couldn't cast '%s' to int" % (val))
+            log_error("Couldn't cast '%s' to int" % (val))
             res = None
 
         return res
@@ -75,7 +79,7 @@ class IndirectBranchModel(QAbstractTableModel):
         col = index.column()
 
         branch = self.branches[row]
-        if col == self.COL_ADDRESS:
+        if value != "" and col == self.COL_ADDRESS:
             addr = self.parse_int(value)
             if addr is None:
                 return False
@@ -172,7 +176,7 @@ class IndirectBranchSetterWidget(QDialog):
             for row in sorted_rows_selected:
                 self.table_model.removeRows(row)
         else:
-            log_alert("No selection to remove")
+            log_error("No selection to remove")
 
     def set_indirect_branches_clicked(self):
         branches = self.table_model.branches
