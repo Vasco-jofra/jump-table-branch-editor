@@ -11,7 +11,7 @@ You can insert the target addresses as a single addr (hex or decimal) (e.g. `0x2
 ![usage gif](./images/out.gif)
 
 # Install
-To install this plugin, navigate to your Binary Ninja plugins directory, and run `git clone git@github.com:Vasco-jofra/indirect-branch-setter.git`.
+To install this plugin, navigate to your Binary Ninja plugins directory, and run `git clone git@github.com:Vasco-jofra/jump-table-branch-editor.git`.
 
 # License
 This plugin is released under a MIT license.
