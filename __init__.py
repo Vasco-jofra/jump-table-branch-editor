@@ -24,12 +24,12 @@ class IndirectBranchModel(QAbstractTableModel):
             return
 
         # Avoid duplicate entries
-        if any([i[self.COL_ADDRESS] == addr for i in self.branches]):
+        if any([branch[self.COL_ADDRESS] == addr for branch in self.branches]):
             return
 
         self.insertRows(row)
-        self.setData(self.index(row, 0), self.default_branch[0])
-        self.setData(self.index(row, 1), hex(int(addr)))
+        self.setData(self.index(row, self.COL_ARCH), self.default_branch[self.COL_ARCH])
+        self.setData(self.index(row, self.COL_ADDRESS), hex(addr))
 
     def parse_int(self, val):
         try:
@@ -171,7 +171,7 @@ class IndirectBranchSetterWidget(QDialog):
                 rows_selected.add(i.row())
             assert len(rows_selected) >= 1
 
-            # Hopefully this sort is enought to delete the correct rows.
+            # Hopefully this sort is enough to delete the correct rows.
             sorted_rows_selected = sorted(list(rows_selected), reverse=True)
             for row in sorted_rows_selected:
                 self.table_model.removeRows(row)
@@ -182,8 +182,7 @@ class IndirectBranchSetterWidget(QDialog):
         branches = self.table_model.branches
         log_debug("Setting 0x%x's indirect branches to: %s" % (self.indirect_jmp_addr, branches))
 
-        func = self.bv.get_functions_containing(self.indirect_jmp_addr)[0]
-        func.set_user_indirect_branches(self.indirect_jmp_addr, branches)
+        self.func.set_user_indirect_branches(self.indirect_jmp_addr, branches)
 
         self.accept()
 

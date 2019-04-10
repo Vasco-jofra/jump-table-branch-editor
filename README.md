@@ -10,8 +10,6 @@ You can insert the target addresses as a single addr (hex or decimal) (e.g. `0x2
 
 ![usage gif](./images/out.gif)
 
-Better quality video [here](./images/out.mp4)
-
 # Install
 To install this plugin, navigate to your Binary Ninja plugins directory, and run `git clone git@github.com:Vasco-jofra/indirect-branch-setter.git`.
 
