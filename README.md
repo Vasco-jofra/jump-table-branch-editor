@@ -1,5 +1,5 @@
 # Indirect branches setter
-Author: **jofra (@V_jofra)**
+Author: **jofra ([@V_jofra](https://twitter.com/V_jofra))**
 
 _A binary ninja plugin that eases fixing jump table branches_
 
