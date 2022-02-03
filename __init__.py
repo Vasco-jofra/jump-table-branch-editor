@@ -2,8 +2,8 @@ import sys
 import copy
 
 from binaryninja import LowLevelILOperation, PluginCommand, log_debug, log_info, log_error, log_alert
-from PySide2.QtCore import Qt, QModelIndex, QAbstractTableModel
-from PySide2.QtWidgets import (QDialog, QApplication, QTableView, QVBoxLayout, QHBoxLayout,
+from PySide6.QtCore import Qt, QModelIndex, QAbstractTableModel
+from PySide6.QtWidgets import (QDialog, QApplication, QTableView, QVBoxLayout, QHBoxLayout,
                                QPushButton, QLabel, QLineEdit)
 
 
